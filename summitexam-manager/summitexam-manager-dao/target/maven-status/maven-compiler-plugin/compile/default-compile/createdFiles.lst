@@ -1,0 +1,7 @@
+com\summitexam\dao\StaticDataMapper.class
+com\summitexam\dao\ExamRecordMapper.class
+com\summitexam\dao\UserMapper.class
+com\summitexam\dao\QuestionMapper.class
+com\summitexam\dao\ExamMapper.class
+com\summitexam\dao\ExamsMapper.class
+com\summitexam\dao\QuestionOptionMapper.class

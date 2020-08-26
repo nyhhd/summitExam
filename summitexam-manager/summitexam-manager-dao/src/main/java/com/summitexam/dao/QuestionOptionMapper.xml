@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.summitexam.dao.QuestionOptionMapper" >
+  <resultMap id="BaseResultMap" type="com.summitexam.bean.QuestionOption" >
+    <id column="question_option_id" property="questionOptionId" jdbcType="INTEGER" />
+    <result column="question_option_content" property="questionOptionContent" jdbcType="VARCHAR" />
+    <result column="question_option_description" property="questionOptionDescription" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    question_option_id, question_option_content, question_option_description
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.summitexam.bean.QuestionOptionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from question_option
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from question_option
+    where question_option_id = #{questionOptionId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from question_option
+    where question_option_id = #{questionOptionId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.summitexam.bean.QuestionOptionExample" >
+    delete from question_option
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" useGeneratedKeys="true" keyProperty="questionOptionId" parameterType="com.summitexam.bean.QuestionOption" >
+    insert into question_option (question_option_id, question_option_content, 
+      question_option_description)
+    values (#{questionOptionId,jdbcType=INTEGER}, #{questionOptionContent,jdbcType=VARCHAR}, 
+      #{questionOptionDescription,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.summitexam.bean.QuestionOption" >
+    insert into question_option
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="questionOptionId != null" >
+        question_option_id,
+      </if>
+      <if test="questionOptionContent != null" >
+        question_option_content,
+      </if>
+      <if test="questionOptionDescription != null" >
+        question_option_description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="questionOptionId != null" >
+        #{questionOptionId,jdbcType=INTEGER},
+      </if>
+      <if test="questionOptionContent != null" >
+        #{questionOptionContent,jdbcType=VARCHAR},
+      </if>
+      <if test="questionOptionDescription != null" >
+        #{questionOptionDescription,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.summitexam.bean.QuestionOptionExample" resultType="java.lang.Integer" >
+    select count(*) from question_option
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update question_option
+    <set >
+      <if test="record.questionOptionId != null" >
+        question_option_id = #{record.questionOptionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.questionOptionContent != null" >
+        question_option_content = #{record.questionOptionContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionOptionDescription != null" >
+        question_option_description = #{record.questionOptionDescription,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update question_option
+    set question_option_id = #{record.questionOptionId,jdbcType=INTEGER},
+      question_option_content = #{record.questionOptionContent,jdbcType=VARCHAR},
+      question_option_description = #{record.questionOptionDescription,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.summitexam.bean.QuestionOption" >
+    update question_option
+    <set >
+      <if test="questionOptionContent != null" >
+        question_option_content = #{questionOptionContent,jdbcType=VARCHAR},
+      </if>
+      <if test="questionOptionDescription != null" >
+        question_option_description = #{questionOptionDescription,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where question_option_id = #{questionOptionId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.summitexam.bean.QuestionOption" >
+    update question_option
+    set question_option_content = #{questionOptionContent,jdbcType=VARCHAR},
+      question_option_description = #{questionOptionDescription,jdbcType=VARCHAR}
+    where question_option_id = #{questionOptionId,jdbcType=INTEGER}
+  </update>
+</mapper>

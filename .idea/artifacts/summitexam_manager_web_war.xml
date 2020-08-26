@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="summitexam-manager-web:war">
+    <output-path>$PROJECT_DIR$/summitexam-manager/summitexam-manager-web/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>summitexam-manager-web</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="summitexam-manager-web.war">
+      <element id="artifact" artifact-name="summitexam-manager-web:war exploded" />
+    </root>
+  </artifact>
+</component>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context 
+		http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop 
+		http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/tx 
+		http://www.springframework.org/schema/tx/spring-tx.xsd">
+    
+	<!-- 配置包扫描器，扫描带@Component注解的类 -->
+	<context:component-scan base-package="com.summitexam.bean"/>
+	<!-- 配置包扫描器，扫描带@Service注解的类 -->
+	<context:component-scan base-package="com.summitexam.manager.service.impl"/>
+	
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+	<bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig">
+        <property name="maxIdle" value="10" />
+        <property name="maxTotal" value="500" />
+        <property name="maxWaitMillis" value="1000000" />
+        <property name="testOnBorrow" value="true" />
+        <property name="testOnReturn" value="true" />
+	</bean>
+	<bean id="jedisPool" class="redis.clients.jedis.JedisPool">
+		<constructor-arg ref="poolConfig" />
+		<constructor-arg value="127.0.0.1" />
+		<constructor-arg type="int" value="6379" />
+		<constructor-arg type="int" value="5000" />
+	</bean>
+	<bean id="poolJedisClient" class="com.summitexam.manager.service.jedisclient.impl.PoolJedisClient"/>
+</beans>

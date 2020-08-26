@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.summitexam.dao.QuestionMapper" >
+  <resultMap id="BaseResultMap" type="com.summitexam.bean.Question" >
+    <id column="question_id" property="questionId" jdbcType="INTEGER" />
+    <result column="question_name" property="questionName" jdbcType="VARCHAR" />
+    <result column="question_score" property="questionScore" jdbcType="VARCHAR" />
+    <result column="question_creator_id" property="questionCreatorId" jdbcType="INTEGER" />
+    <result column="question_level_id" property="questionLevelId" jdbcType="VARCHAR" />
+    <result column="question_type_id" property="questionTypeId" jdbcType="VARCHAR" />
+    <result column="question_category_id" property="questionCategoryId" jdbcType="VARCHAR" />
+    <result column="question_description" property="questionDescription" jdbcType="VARCHAR" />
+    <result column="question_option_ids" property="questionOptionIds" jdbcType="VARCHAR" />
+    <result column="question_answer_option_ids" property="questionAnswerOptionIds" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="is_open" property="isOpen" jdbcType="VARCHAR" />
+    <result column="is_used" property="isUsed" jdbcType="VARCHAR" />
+    <result column="question_picture" property="questionPicture" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    question_id, question_name, question_score, question_creator_id, question_level_id, 
+    question_type_id, question_category_id, question_description, question_option_ids, 
+    question_answer_option_ids, update_time, create_time, is_open, is_used, question_picture
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.summitexam.bean.QuestionExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from question
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from question
+    where question_id = #{questionId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from question
+    where question_id = #{questionId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.summitexam.bean.QuestionExample" >
+    delete from question
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.summitexam.bean.Question" >
+    insert into question (question_id, question_name, question_score, 
+      question_creator_id, question_level_id, question_type_id, 
+      question_category_id, question_description, 
+      question_option_ids, question_answer_option_ids, 
+      update_time, create_time, is_open, 
+      is_used, question_picture)
+    values (#{questionId,jdbcType=INTEGER}, #{questionName,jdbcType=VARCHAR}, #{questionScore,jdbcType=VARCHAR}, 
+      #{questionCreatorId,jdbcType=INTEGER}, #{questionLevelId,jdbcType=VARCHAR}, #{questionTypeId,jdbcType=VARCHAR}, 
+      #{questionCategoryId,jdbcType=VARCHAR}, #{questionDescription,jdbcType=VARCHAR}, 
+      #{questionOptionIds,jdbcType=VARCHAR}, #{questionAnswerOptionIds,jdbcType=VARCHAR}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{isOpen,jdbcType=VARCHAR}, 
+      #{isUsed,jdbcType=VARCHAR}, #{questionPicture,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.summitexam.bean.Question" >
+    insert into question
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="questionId != null" >
+        question_id,
+      </if>
+      <if test="questionName != null" >
+        question_name,
+      </if>
+      <if test="questionScore != null" >
+        question_score,
+      </if>
+      <if test="questionCreatorId != null" >
+        question_creator_id,
+      </if>
+      <if test="questionLevelId != null" >
+        question_level_id,
+      </if>
+      <if test="questionTypeId != null" >
+        question_type_id,
+      </if>
+      <if test="questionCategoryId != null" >
+        question_category_id,
+      </if>
+      <if test="questionDescription != null" >
+        question_description,
+      </if>
+      <if test="questionOptionIds != null" >
+        question_option_ids,
+      </if>
+      <if test="questionAnswerOptionIds != null" >
+        question_answer_option_ids,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="isOpen != null" >
+        is_open,
+      </if>
+      <if test="isUsed != null" >
+        is_used,
+      </if>
+      <if test="questionPicture != null" >
+        question_picture,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="questionId != null" >
+        #{questionId,jdbcType=INTEGER},
+      </if>
+      <if test="questionName != null" >
+        #{questionName,jdbcType=VARCHAR},
+      </if>
+      <if test="questionScore != null" >
+        #{questionScore,jdbcType=VARCHAR},
+      </if>
+      <if test="questionCreatorId != null" >
+        #{questionCreatorId,jdbcType=INTEGER},
+      </if>
+      <if test="questionLevelId != null" >
+        #{questionLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="questionTypeId != null" >
+        #{questionTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="questionCategoryId != null" >
+        #{questionCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="questionDescription != null" >
+        #{questionDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="questionOptionIds != null" >
+        #{questionOptionIds,jdbcType=VARCHAR},
+      </if>
+      <if test="questionAnswerOptionIds != null" >
+        #{questionAnswerOptionIds,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isOpen != null" >
+        #{isOpen,jdbcType=VARCHAR},
+      </if>
+      <if test="isUsed != null" >
+        #{isUsed,jdbcType=VARCHAR},
+      </if>
+      <if test="questionPicture != null" >
+        #{questionPicture,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.summitexam.bean.QuestionExample" resultType="java.lang.Integer" >
+    select count(*) from question
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update question
+    <set >
+      <if test="record.questionId != null" >
+        question_id = #{record.questionId,jdbcType=INTEGER},
+      </if>
+      <if test="record.questionName != null" >
+        question_name = #{record.questionName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionScore != null" >
+        question_score = #{record.questionScore,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionCreatorId != null" >
+        question_creator_id = #{record.questionCreatorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.questionLevelId != null" >
+        question_level_id = #{record.questionLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionTypeId != null" >
+        question_type_id = #{record.questionTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionCategoryId != null" >
+        question_category_id = #{record.questionCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionDescription != null" >
+        question_description = #{record.questionDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionOptionIds != null" >
+        question_option_ids = #{record.questionOptionIds,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionAnswerOptionIds != null" >
+        question_answer_option_ids = #{record.questionAnswerOptionIds,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isOpen != null" >
+        is_open = #{record.isOpen,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isUsed != null" >
+        is_used = #{record.isUsed,jdbcType=VARCHAR},
+      </if>
+      <if test="record.questionPicture != null" >
+        question_picture = #{record.questionPicture,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update question
+    set question_id = #{record.questionId,jdbcType=INTEGER},
+      question_name = #{record.questionName,jdbcType=VARCHAR},
+      question_score = #{record.questionScore,jdbcType=VARCHAR},
+      question_creator_id = #{record.questionCreatorId,jdbcType=INTEGER},
+      question_level_id = #{record.questionLevelId,jdbcType=VARCHAR},
+      question_type_id = #{record.questionTypeId,jdbcType=VARCHAR},
+      question_category_id = #{record.questionCategoryId,jdbcType=VARCHAR},
+      question_description = #{record.questionDescription,jdbcType=VARCHAR},
+      question_option_ids = #{record.questionOptionIds,jdbcType=VARCHAR},
+      question_answer_option_ids = #{record.questionAnswerOptionIds,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      is_open = #{record.isOpen,jdbcType=VARCHAR},
+      is_used = #{record.isUsed,jdbcType=VARCHAR},
+      question_picture = #{record.questionPicture,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.summitexam.bean.Question" >
+    update question
+    <set >
+      <if test="questionName != null" >
+        question_name = #{questionName,jdbcType=VARCHAR},
+      </if>
+      <if test="questionScore != null" >
+        question_score = #{questionScore,jdbcType=VARCHAR},
+      </if>
+      <if test="questionCreatorId != null" >
+        question_creator_id = #{questionCreatorId,jdbcType=INTEGER},
+      </if>
+      <if test="questionLevelId != null" >
+        question_level_id = #{questionLevelId,jdbcType=VARCHAR},
+      </if>
+      <if test="questionTypeId != null" >
+        question_type_id = #{questionTypeId,jdbcType=VARCHAR},
+      </if>
+      <if test="questionCategoryId != null" >
+        question_category_id = #{questionCategoryId,jdbcType=VARCHAR},
+      </if>
+      <if test="questionDescription != null" >
+        question_description = #{questionDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="questionOptionIds != null" >
+        question_option_ids = #{questionOptionIds,jdbcType=VARCHAR},
+      </if>
+      <if test="questionAnswerOptionIds != null" >
+        question_answer_option_ids = #{questionAnswerOptionIds,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isOpen != null" >
+        is_open = #{isOpen,jdbcType=VARCHAR},
+      </if>
+      <if test="isUsed != null" >
+        is_used = #{isUsed,jdbcType=VARCHAR},
+      </if>
+      <if test="questionPicture != null" >
+        question_picture = #{questionPicture,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where question_id = #{questionId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.summitexam.bean.Question" >
+    update question
+    set question_name = #{questionName,jdbcType=VARCHAR},
+      question_score = #{questionScore,jdbcType=VARCHAR},
+      question_creator_id = #{questionCreatorId,jdbcType=INTEGER},
+      question_level_id = #{questionLevelId,jdbcType=VARCHAR},
+      question_type_id = #{questionTypeId,jdbcType=VARCHAR},
+      question_category_id = #{questionCategoryId,jdbcType=VARCHAR},
+      question_description = #{questionDescription,jdbcType=VARCHAR},
+      question_option_ids = #{questionOptionIds,jdbcType=VARCHAR},
+      question_answer_option_ids = #{questionAnswerOptionIds,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_open = #{isOpen,jdbcType=VARCHAR},
+      is_used = #{isUsed,jdbcType=VARCHAR},
+      question_picture = #{questionPicture,jdbcType=VARCHAR}
+    where question_id = #{questionId,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.summitexam.dao.ExamsMapper" >
+  <resultMap id="BaseResultMap" type="com.summitexam.bean.Exams" >
+    <id column="exams_id" property="examsId" jdbcType="INTEGER" />
+    <result column="exams_name" property="examsName" jdbcType="VARCHAR" />
+    <result column="exams_description" property="examsDescription" jdbcType="VARCHAR" />
+    <result column="exam_question_ids_radio" property="examQuestionIdsRadio" jdbcType="VARCHAR" />
+    <result column="exam_question_ids_check" property="examQuestionIdsCheck" jdbcType="VARCHAR" />
+    <result column="exam_question_ids_judge" property="examQuestionIdsJudge" jdbcType="VARCHAR" />
+    <result column="exams_score" property="examsScore" jdbcType="INTEGER" />
+    <result column="exams_score_radio" property="examsScoreRadio" jdbcType="INTEGER" />
+    <result column="exams_score_check" property="examsScoreCheck" jdbcType="INTEGER" />
+    <result column="exams_score_judge" property="examsScoreJudge" jdbcType="INTEGER" />
+    <result column="exams_creator_id" property="examsCreatorId" jdbcType="INTEGER" />
+    <result column="exams_creator_nickname" property="examsCreatorNickname" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="VARCHAR" />
+    <result column="update_time" property="updateTime" jdbcType="VARCHAR" />
+    <result column="is_open" property="isOpen" jdbcType="VARCHAR" />
+    <result column="examinee_ids" property="examineeIds" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    exams_id, exams_name, exams_description, exam_question_ids_radio, exam_question_ids_check, 
+    exam_question_ids_judge, exams_score, exams_score_radio, exams_score_check, exams_score_judge, 
+    exams_creator_id, exams_creator_nickname, create_time, update_time, is_open, examinee_ids
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.summitexam.bean.ExamsExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from exams
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from exams
+    where exams_id = #{examsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from exams
+    where exams_id = #{examsId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.summitexam.bean.ExamsExample" >
+    delete from exams
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.summitexam.bean.Exams" >
+    insert into exams (exams_id, exams_name, exams_description, 
+      exam_question_ids_radio, exam_question_ids_check, 
+      exam_question_ids_judge, exams_score, exams_score_radio, 
+      exams_score_check, exams_score_judge, exams_creator_id, 
+      exams_creator_nickname, create_time, update_time, 
+      is_open, examinee_ids)
+    values (#{examsId,jdbcType=INTEGER}, #{examsName,jdbcType=VARCHAR}, #{examsDescription,jdbcType=VARCHAR}, 
+      #{examQuestionIdsRadio,jdbcType=VARCHAR}, #{examQuestionIdsCheck,jdbcType=VARCHAR}, 
+      #{examQuestionIdsJudge,jdbcType=VARCHAR}, #{examsScore,jdbcType=INTEGER}, #{examsScoreRadio,jdbcType=INTEGER}, 
+      #{examsScoreCheck,jdbcType=INTEGER}, #{examsScoreJudge,jdbcType=INTEGER}, #{examsCreatorId,jdbcType=INTEGER}, 
+      #{examsCreatorNickname,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, 
+      #{isOpen,jdbcType=VARCHAR}, #{examineeIds,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.summitexam.bean.Exams" >
+    insert into exams
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="examsId != null" >
+        exams_id,
+      </if>
+      <if test="examsName != null" >
+        exams_name,
+      </if>
+      <if test="examsDescription != null" >
+        exams_description,
+      </if>
+      <if test="examQuestionIdsRadio != null" >
+        exam_question_ids_radio,
+      </if>
+      <if test="examQuestionIdsCheck != null" >
+        exam_question_ids_check,
+      </if>
+      <if test="examQuestionIdsJudge != null" >
+        exam_question_ids_judge,
+      </if>
+      <if test="examsScore != null" >
+        exams_score,
+      </if>
+      <if test="examsScoreRadio != null" >
+        exams_score_radio,
+      </if>
+      <if test="examsScoreCheck != null" >
+        exams_score_check,
+      </if>
+      <if test="examsScoreJudge != null" >
+        exams_score_judge,
+      </if>
+      <if test="examsCreatorId != null" >
+        exams_creator_id,
+      </if>
+      <if test="examsCreatorNickname != null" >
+        exams_creator_nickname,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="isOpen != null" >
+        is_open,
+      </if>
+      <if test="examineeIds != null" >
+        examinee_ids,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="examsId != null" >
+        #{examsId,jdbcType=INTEGER},
+      </if>
+      <if test="examsName != null" >
+        #{examsName,jdbcType=VARCHAR},
+      </if>
+      <if test="examsDescription != null" >
+        #{examsDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="examQuestionIdsRadio != null" >
+        #{examQuestionIdsRadio,jdbcType=VARCHAR},
+      </if>
+      <if test="examQuestionIdsCheck != null" >
+        #{examQuestionIdsCheck,jdbcType=VARCHAR},
+      </if>
+      <if test="examQuestionIdsJudge != null" >
+        #{examQuestionIdsJudge,jdbcType=VARCHAR},
+      </if>
+      <if test="examsScore != null" >
+        #{examsScore,jdbcType=INTEGER},
+      </if>
+      <if test="examsScoreRadio != null" >
+        #{examsScoreRadio,jdbcType=INTEGER},
+      </if>
+      <if test="examsScoreCheck != null" >
+        #{examsScoreCheck,jdbcType=INTEGER},
+      </if>
+      <if test="examsScoreJudge != null" >
+        #{examsScoreJudge,jdbcType=INTEGER},
+      </if>
+      <if test="examsCreatorId != null" >
+        #{examsCreatorId,jdbcType=INTEGER},
+      </if>
+      <if test="examsCreatorNickname != null" >
+        #{examsCreatorNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="isOpen != null" >
+        #{isOpen,jdbcType=VARCHAR},
+      </if>
+      <if test="examineeIds != null" >
+        #{examineeIds,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.summitexam.bean.ExamsExample" resultType="java.lang.Integer" >
+    select count(*) from exams
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update exams
+    <set >
+      <if test="record.examsId != null" >
+        exams_id = #{record.examsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.examsName != null" >
+        exams_name = #{record.examsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.examsDescription != null" >
+        exams_description = #{record.examsDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="record.examQuestionIdsRadio != null" >
+        exam_question_ids_radio = #{record.examQuestionIdsRadio,jdbcType=VARCHAR},
+      </if>
+      <if test="record.examQuestionIdsCheck != null" >
+        exam_question_ids_check = #{record.examQuestionIdsCheck,jdbcType=VARCHAR},
+      </if>
+      <if test="record.examQuestionIdsJudge != null" >
+        exam_question_ids_judge = #{record.examQuestionIdsJudge,jdbcType=VARCHAR},
+      </if>
+      <if test="record.examsScore != null" >
+        exams_score = #{record.examsScore,jdbcType=INTEGER},
+      </if>
+      <if test="record.examsScoreRadio != null" >
+        exams_score_radio = #{record.examsScoreRadio,jdbcType=INTEGER},
+      </if>
+      <if test="record.examsScoreCheck != null" >
+        exams_score_check = #{record.examsScoreCheck,jdbcType=INTEGER},
+      </if>
+      <if test="record.examsScoreJudge != null" >
+        exams_score_judge = #{record.examsScoreJudge,jdbcType=INTEGER},
+      </if>
+      <if test="record.examsCreatorId != null" >
+        exams_creator_id = #{record.examsCreatorId,jdbcType=INTEGER},
+      </if>
+      <if test="record.examsCreatorNickname != null" >
+        exams_creator_nickname = #{record.examsCreatorNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isOpen != null" >
+        is_open = #{record.isOpen,jdbcType=VARCHAR},
+      </if>
+      <if test="record.examineeIds != null" >
+        examinee_ids = #{record.examineeIds,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update exams
+    set exams_id = #{record.examsId,jdbcType=INTEGER},
+      exams_name = #{record.examsName,jdbcType=VARCHAR},
+      exams_description = #{record.examsDescription,jdbcType=VARCHAR},
+      exam_question_ids_radio = #{record.examQuestionIdsRadio,jdbcType=VARCHAR},
+      exam_question_ids_check = #{record.examQuestionIdsCheck,jdbcType=VARCHAR},
+      exam_question_ids_judge = #{record.examQuestionIdsJudge,jdbcType=VARCHAR},
+      exams_score = #{record.examsScore,jdbcType=INTEGER},
+      exams_score_radio = #{record.examsScoreRadio,jdbcType=INTEGER},
+      exams_score_check = #{record.examsScoreCheck,jdbcType=INTEGER},
+      exams_score_judge = #{record.examsScoreJudge,jdbcType=INTEGER},
+      exams_creator_id = #{record.examsCreatorId,jdbcType=INTEGER},
+      exams_creator_nickname = #{record.examsCreatorNickname,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=VARCHAR},
+      is_open = #{record.isOpen,jdbcType=VARCHAR},
+      examinee_ids = #{record.examineeIds,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.summitexam.bean.Exams" >
+    update exams
+    <set >
+      <if test="examsName != null" >
+        exams_name = #{examsName,jdbcType=VARCHAR},
+      </if>
+      <if test="examsDescription != null" >
+        exams_description = #{examsDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="examQuestionIdsRadio != null" >
+        exam_question_ids_radio = #{examQuestionIdsRadio,jdbcType=VARCHAR},
+      </if>
+      <if test="examQuestionIdsCheck != null" >
+        exam_question_ids_check = #{examQuestionIdsCheck,jdbcType=VARCHAR},
+      </if>
+      <if test="examQuestionIdsJudge != null" >
+        exam_question_ids_judge = #{examQuestionIdsJudge,jdbcType=VARCHAR},
+      </if>
+      <if test="examsScore != null" >
+        exams_score = #{examsScore,jdbcType=INTEGER},
+      </if>
+      <if test="examsScoreRadio != null" >
+        exams_score_radio = #{examsScoreRadio,jdbcType=INTEGER},
+      </if>
+      <if test="examsScoreCheck != null" >
+        exams_score_check = #{examsScoreCheck,jdbcType=INTEGER},
+      </if>
+      <if test="examsScoreJudge != null" >
+        exams_score_judge = #{examsScoreJudge,jdbcType=INTEGER},
+      </if>
+      <if test="examsCreatorId != null" >
+        exams_creator_id = #{examsCreatorId,jdbcType=INTEGER},
+      </if>
+      <if test="examsCreatorNickname != null" >
+        exams_creator_nickname = #{examsCreatorNickname,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="isOpen != null" >
+        is_open = #{isOpen,jdbcType=VARCHAR},
+      </if>
+      <if test="examineeIds != null" >
+        examinee_ids = #{examineeIds,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where exams_id = #{examsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.summitexam.bean.Exams" >
+    update exams
+    set exams_name = #{examsName,jdbcType=VARCHAR},
+      exams_description = #{examsDescription,jdbcType=VARCHAR},
+      exam_question_ids_radio = #{examQuestionIdsRadio,jdbcType=VARCHAR},
+      exam_question_ids_check = #{examQuestionIdsCheck,jdbcType=VARCHAR},
+      exam_question_ids_judge = #{examQuestionIdsJudge,jdbcType=VARCHAR},
+      exams_score = #{examsScore,jdbcType=INTEGER},
+      exams_score_radio = #{examsScoreRadio,jdbcType=INTEGER},
+      exams_score_check = #{examsScoreCheck,jdbcType=INTEGER},
+      exams_score_judge = #{examsScoreJudge,jdbcType=INTEGER},
+      exams_creator_id = #{examsCreatorId,jdbcType=INTEGER},
+      exams_creator_nickname = #{examsCreatorNickname,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      is_open = #{isOpen,jdbcType=VARCHAR},
+      examinee_ids = #{examineeIds,jdbcType=VARCHAR}
+    where exams_id = #{examsId,jdbcType=INTEGER}
+  </update>
+</mapper>
